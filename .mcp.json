@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "contextdb": {
+      "url": "https://api.contextdb.ai/mcp"
+    }
+  }
+}

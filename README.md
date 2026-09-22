@@ -30,6 +30,25 @@ Cursor opens ContextDB authorization on first connection. Sign in, choose one
 project, review the scopes, and approve. No `cdb_` project key belongs in this
 file.
 
+## Other clients
+
+Claude-compatible clients can load the repository's `.mcp.json`.
+
+Grok Build can load `.grok/config.toml` or add the server directly:
+
+```bash
+grok mcp add --transport http contextdb https://api.contextdb.ai/mcp
+```
+
+For ChatGPT, Claude.ai, Grok web, or Lovable, add this remote connector URL:
+
+```text
+https://api.contextdb.ai/mcp
+```
+
+Each client should discover ContextDB's OAuth metadata and open the same
+project-consent flow.
+
 ## Try the tools
 
 After authorization, ask your AI client:
