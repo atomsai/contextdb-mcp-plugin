@@ -1,0 +1,6 @@
+ContextDB MCP Plugin
+Copyright 2026 Gaurav Sharma
+
+ContextDB and the ContextDB logo are trademarks of Atoms AI.
+This plugin configuration connects to the separately operated ContextDB Cloud
+service at https://api.contextdb.ai/mcp.

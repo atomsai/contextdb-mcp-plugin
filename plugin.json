@@ -1,0 +1,20 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "contextdb-memory",
+  "description": "Customer memory with recall, confirmation, forgetting, and pre-action evidence checks.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Atoms AI",
+    "url": "https://contextdb.ai"
+  },
+  "homepage": "https://contextdb.ai/mcp",
+  "repository": "https://github.com/atomsai/contextdb-mcp-plugin",
+  "license": "Apache-2.0",
+  "keywords": [
+    "mcp",
+    "memory",
+    "ai-agents",
+    "customer-context",
+    "oauth"
+  ]
+}
