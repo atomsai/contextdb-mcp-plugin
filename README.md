@@ -102,8 +102,21 @@ prompts, or server-initiated messages.
 
 ContextDB Cloud and the OAuth MCP connector are Hosted Alpha with no
 availability SLA. The server is published in the official MCP Registry as
-`io.github.atomsai/contextdb-memory@0.1.0`. Vendor-specific marketplace reviews
-remain separate.
+`io.github.atomsai/contextdb-memory@0.1.0`. The ChatGPT plugin was submitted to
+OpenAI review on September 30, 2026 and is not yet approved. The Cursor
+Directory listing was submitted the same day.
+
+## OpenAI plugin package
+
+This repository is also the OpenAI plugin package. `plugin.json` carries the
+ChatGPT listing text, icons, review test cases, demo recording, and release
+notes under `extensions.com.openai`. Reviewer credentials are never stored here;
+they are entered only in the OpenAI dashboard. Build the upload ZIP from the
+repository root:
+
+```bash
+zip -r contextdb-openai-plugin.zip plugin.json mcp.json assets README.md LICENSE NOTICE
+```
 
 ## Links
 

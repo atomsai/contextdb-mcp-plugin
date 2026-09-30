@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "contextdb-memory",
   "description": "Customer memory with recall, confirmation, forgetting, and pre-action evidence checks.",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "author": {
     "name": "Atoms AI",
     "url": "https://contextdb.ai"
@@ -16,5 +16,92 @@
     "ai-agents",
     "customer-context",
     "oauth"
-  ]
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "ContextDB",
+        "shortDescription": "Save facts, check them first",
+        "longDescription": "ContextDB gives ChatGPT memory for one ContextDB project. Save facts you state, recall them later, and check memory before a consequential step such as a booking. Each check returns act, ask, or abstain: act when confirmed memory supports the step, ask when a fact still needs your confirmation, and abstain when there is no evidence. You can also list facts awaiting confirmation, confirm them, and forget any saved memory. You sign in with your ContextDB account and choose one project, so ChatGPT receives a revocable OAuth token and never a project API key. ContextDB only advises: it does not book, pay, or change anything outside its own memory store. ContextDB Cloud is a hosted alpha with no uptime SLA.",
+        "developerName": "SaaS Labs",
+        "category": "Productivity",
+        "capabilities": [
+          "Remember facts",
+          "Recall memory",
+          "Check memory before actions",
+          "Confirm pending memory",
+          "Forget memory"
+        ],
+        "websiteURL": "https://contextdb.ai",
+        "supportURL": "https://contextdb.ai/legal#support",
+        "privacyPolicyURL": "https://contextdb.ai/legal#privacy",
+        "termsOfServiceURL": "https://contextdb.ai/legal",
+        "defaultPrompt": [
+          "Remember that I prefer Thursday afternoon appointments.",
+          "What do you remember about my appointment preferences?",
+          "Before you book my next visit, check which of my preferences are confirmed."
+        ],
+        "composerIcon": "./assets/contextdb-icon.png",
+        "composerIconDark": "./assets/contextdb-icon.png",
+        "logo": "./assets/contextdb-icon.png",
+        "logoDark": "./assets/contextdb-icon.png"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Save an unconfirmed appointment preference",
+              "prompt": "Remember that I might prefer Thursday afternoon appointments. Treat it as unconfirmed and relevant to booking until I say yes.",
+              "tools_triggered": "remember",
+              "expected_behavior": "ContextDB stores one memory and returns it with a memory ID and a memory_version number. The memory is marked action-relevant and is not yet confirmed. ChatGPT tells the user the preference was saved and still needs confirmation before it is used for a booking."
+            },
+            {
+              "description": "Recall a saved preference to answer a question (run after the first case, same account)",
+              "prompt": "What do you remember about my appointment preferences?",
+              "tools_triggered": "recall",
+              "expected_behavior": "ContextDB returns a memories list that includes the Thursday afternoon preference saved in the first case. ChatGPT answers using that memory and does not invent other preferences. recall is read-only and changes nothing."
+            },
+            {
+              "description": "Check memory before a consequential action while the preference is still unconfirmed",
+              "prompt": "Before you book my next visit, check my appointment preference.",
+              "tools_triggered": "recall_for_action",
+              "expected_behavior": "ContextDB returns outcome \"ask\", an empty memories list, and the first case's memory ID in pending_confirmation_ids. ChatGPT shows the pending preference, asks the user to confirm it, and does not treat it as approved. ContextDB itself never books anything."
+            },
+            {
+              "description": "Confirm the pending preference, then check again",
+              "prompt": "Yes, Thursday afternoons are correct. Confirm it and check again.",
+              "tools_triggered": "confirm, then recall_for_action (pending_confirmations may be called first to find the ID)",
+              "expected_behavior": "confirm returns the memory marked as confirmed with a new memory_version. The follow-up recall_for_action returns outcome \"act\" with the Thursday afternoon memory as evidence and no pending confirmation IDs."
+            },
+            {
+              "description": "Delete a saved memory",
+              "prompt": "Forget my Thursday afternoon appointment preference.",
+              "tools_triggered": "forget (recall may be called first to find the memory ID)",
+              "expected_behavior": "ChatGPT asks the user to allow the delete. forget then returns mode \"memory\", deleted 1, and a new memory_version. If the user asks what ContextDB remembers about appointment preferences, recall returns no matching memories."
+            }
+          ],
+          "negative": [
+            {
+              "description": "General database question with no request to save or use personal memory",
+              "prompt": "Explain the difference between a vector database and a relational database."
+            },
+            {
+              "description": "Reading a calendar or inbox, which ContextDB cannot access",
+              "prompt": "What meetings are on my calendar tomorrow?"
+            },
+            {
+              "description": "Creative writing that mentions a weekday but asks for nothing to be saved or recalled",
+              "prompt": "Write a short poem about Thursday afternoons."
+            }
+          ]
+        },
+        "demo_recording_url": "https://storage.googleapis.com/contextdb-review-media/openai/contextdb-chatgpt-demo-4b965c207fa3.mp4",
+        "commerce": false,
+        "commerce_description": "ContextDB does not sell products or process payments."
+      },
+      "publication": {
+        "release_notes": "ContextDB for ChatGPT, in hosted alpha with no uptime SLA. Six tools: remember, recall, recall_for_action, pending_confirmations, confirm, and forget. You sign in with your ContextDB account and pick one project. Before an action, recall_for_action tells ChatGPT whether memory is trusted enough to act on, needs your confirmation first, or is missing."
+      }
+    }
+  }
 }
