@@ -8,14 +8,15 @@ content are synthetic.
 
 ```bash
 python3 -m venv .venv
-.venv/bin/pip install pycontextdb==0.4.4
+.venv/bin/pip install pycontextdb==0.4.5
 .venv/bin/python compaction_proof.py
 ```
 
 The SDK logs one warning that no LLM key is configured. Nothing in this
 example calls an LLM.
 
-Output verified on October 5, 2026 with `pycontextdb==0.4.4` on Python 3.14:
+Output verified on October 5, 2026 with `pycontextdb==0.4.4` and
+`pycontextdb==0.4.5` on Python 3.14:
 
 ```json
 [

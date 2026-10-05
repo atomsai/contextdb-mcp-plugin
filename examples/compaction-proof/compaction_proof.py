@@ -1,7 +1,7 @@
 """Self-written context notes cannot authorize an action on their own.
 
 Synthetic scenario: a support agent working a long refund case compacts its
-context and saves what it wants to keep. Runs offline on pycontextdb==0.4.4.
+context and saves what it wants to keep. Runs offline on pycontextdb==0.4.5.
 """
 
 import asyncio
