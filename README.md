@@ -83,6 +83,36 @@ partition from the authorizing account and project.
 ContextDB advises. The customer application remains responsible for business
 authorization, current system state, and final action execution.
 
+## Skill: compact your context safely
+
+Agents that compact, summarize, or rewrite their own context during long tasks
+can lose what the user said or start acting on their own summary. The
+[`contextdb-compaction` skill](skills/contextdb-compaction/SKILL.md) tells the
+agent to save customer facts with honest source labels before it compacts, to
+store facts rather than instructions, and to call `recall_for_action` before
+acting afterwards.
+
+Install it for Cursor or Claude Code:
+
+```bash
+mkdir -p ~/.cursor/skills/contextdb-compaction
+curl -fsSL https://raw.githubusercontent.com/atomsai/contextdb-mcp-plugin/main/skills/contextdb-compaction/SKILL.md \
+  -o ~/.cursor/skills/contextdb-compaction/SKILL.md
+```
+
+For Claude Code, use `~/.claude/skills/contextdb-compaction/` instead. Any
+client that reads Agent Skills `SKILL.md` files can load the same file.
+
+The [compaction proof](examples/compaction-proof/) runs offline on the
+Apache-2.0 SDK and shows what ContextDB does with the notes the skill saves:
+
+- the customer's own words get `act`;
+- the agent's own summary gets `ask`;
+- an instruction written into the agent's notes gets `abstain`.
+
+We have not yet measured how consistently agents follow the skill. Treat it as
+guidance and keep the action check in your application.
+
 ## Security and compatibility
 
 - OAuth 2.1 authorization code with S256 PKCE
@@ -127,6 +157,7 @@ zip -r contextdb-openai-plugin.zip plugin.json mcp.json assets README.md LICENSE
 - [Service status](https://contextdb.ai/status)
 - [Official MCP Registry entry](https://registry.modelcontextprotocol.io/v0/servers?search=io.github.atomsai%2Fcontextdb-memory)
 - [Open-source ContextDB SDK](https://github.com/atomsai/contextdb)
+- [Context language models and agent memory](https://contextdb.ai/context-language-models-and-agent-memory)
 
 ## FAQ
 
@@ -145,6 +176,12 @@ Caller-supplied `user_id` values are rejected.
 No. It means trusted memory supports the proposed action. The host still
 authenticates, authorizes, checks current state, executes, and records the
 result.
+
+### Can my agent's own summary authorize an action?
+
+Not by itself. Save summaries as `agent_inferred`. `recall_for_action` returns
+`ask` for them until someone confirms the fact, and instruction-shaped notes
+are flagged and cannot support an action.
 
 ### How do I revoke access?
 
