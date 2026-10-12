@@ -125,28 +125,34 @@ guidance and keep the action check in your application.
 - Server-bound memory partition
 
 The server uses stateless Streamable HTTP with JSON responses and MCP protocol
-`2025-06-18`. It is tools-only: no SSE, sessions, resumability, resources,
-prompts, or server-initiated messages.
+`2025-11-25`, and also accepts `2025-06-18` and `2025-03-26`. It is
+tools-only: no SSE, sessions, resumability, resources, prompts, or
+server-initiated messages.
 
 ## Current status
 
 ContextDB Cloud and the OAuth MCP connector are Hosted Alpha with no
 availability SLA. The server is published in the official MCP Registry as
-`io.github.atomsai/contextdb-memory@0.1.0`. The ChatGPT plugin was submitted to
-OpenAI review on September 30, 2026 and is not yet approved. The Cursor
-Directory listing was submitted the same day.
+`io.github.atomsai/contextdb-memory@0.1.0`. The ChatGPT plugin (version 1.0.0)
+was submitted to OpenAI review on September 30, 2026 and is not yet approved;
+package 1.1.1 is prepared for upload after that review. The
+[Cursor Directory listing](https://cursor.directory/plugins/contextdb) went
+public the same day.
 
 ## OpenAI plugin package
 
 This repository is also the OpenAI plugin package. `plugin.json` carries the
-ChatGPT listing text, icons, review test cases, demo recording, and release
-notes under `extensions.com.openai`. Reviewer credentials are never stored here;
-they are entered only in the OpenAI dashboard. Build the upload ZIP from the
-repository root:
+ChatGPT listing text, capability labels, icons, review test cases, demo
+recording, and release notes under `extensions.com.openai`. Reviewer
+credentials are never stored here; they are entered only in the OpenAI
+dashboard. The ChatGPT package is MCP-only, so the ZIP leaves out `skills/` and
+`examples/`. Build it from the repository root:
 
 ```bash
-zip -r contextdb-openai-plugin.zip plugin.json mcp.json assets README.md LICENSE NOTICE
+zip -r contextdb-openai-plugin-1.1.1.zip plugin.json mcp.json assets README.md LICENSE NOTICE
 ```
+
+Upload a new version only when no review is active for the plugin.
 
 ## Links
 
@@ -173,15 +179,17 @@ Caller-supplied `user_id` values are rejected.
 
 ### Does an `act` result execute a business action?
 
-No. It means trusted memory supports the proposed action. The host still
-authenticates, authorizes, checks current state, executes, and records the
-result.
+No. It means trusted memory is on file for the user. ContextDB Cloud does not
+yet check that the memory is about the proposed action, so check the returned
+evidence. The host still authenticates, authorizes, checks current state,
+executes, and records the result.
 
 ### Can my agent's own summary authorize an action?
 
-Not by itself. Save summaries as `agent_inferred`. `recall_for_action` returns
-`ask` for them until someone confirms the fact, and instruction-shaped notes
-are flagged and cannot support an action.
+Not by itself. Save summaries as `agent_inferred`. `recall_for_action` never
+returns them as evidence until someone confirms the fact, and lists them as
+pending confirmations instead. Instruction-shaped notes are flagged and cannot
+support an action.
 
 ### How do I revoke access?
 
