@@ -118,7 +118,7 @@ Install only the task skills your workflow needs. Remove any skill at any time b
 | [`contextdb-action-gate`](skills/contextdb-action-gate/SKILL.md) | Gate consequential actions with slot-scoped `recall_for_action` (`entity`+`attribute`), `confirm`, and `act`/`ask`/`abstain` | `mkdir -p ~/.cursor/skills/contextdb-action-gate && curl -fsSL https://raw.githubusercontent.com/atomsai/contextdb-mcp-plugin/main/skills/contextdb-action-gate/SKILL.md -o ~/.cursor/skills/contextdb-action-gate/SKILL.md` |
 | [`contextdb-compaction`](skills/contextdb-compaction/SKILL.md) | Persist sourced facts before context compaction/summarization and verify with `recall_for_action` afterwards | `mkdir -p ~/.cursor/skills/contextdb-compaction && curl -fsSL https://raw.githubusercontent.com/atomsai/contextdb-mcp-plugin/main/skills/contextdb-compaction/SKILL.md -o ~/.cursor/skills/contextdb-compaction/SKILL.md` |
 
-The [offline compaction proof](examples/compaction-proof/) runs on the Apache-2.0 `pycontextdb` SDK (`0.4.8`) and verifies that:
+The [offline compaction proof](examples/compaction-proof/) runs on the Apache-2.0 `pycontextdb` SDK (`0.4.9`) and verifies that:
 
 - the customer's own words produce `act`;
 - the agent's own summary produces `ask`;
@@ -167,7 +167,7 @@ zip -r contextdb-openai-plugin-1.1.1.zip plugin.json mcp.json assets README.md L
 - [Security controls & boundaries](https://contextdb.ai/security)
 - [Service status](https://contextdb.ai/status)
 - [Official MCP Registry entry](https://registry.modelcontextprotocol.io/v0/servers?search=io.github.atomsai%2Fcontextdb-memory)
-- [Open-source `pycontextdb` Python SDK (`0.4.8`)](https://pypi.org/project/pycontextdb/) ([GitHub](https://github.com/atomsai/contextdb))
+- [Open-source `pycontextdb` Python SDK (`0.4.9`)](https://pypi.org/project/pycontextdb/) ([GitHub](https://github.com/atomsai/contextdb))
 
 ## FAQ
 
