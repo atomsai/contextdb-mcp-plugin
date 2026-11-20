@@ -1,6 +1,6 @@
 # MCP Customer Memory Connector & Agent Skills for AI Agents — ContextDB
 
-ContextDB is an OAuth 2.1 Streamable HTTP MCP connector (`https://api.contextdb.ai/mcp`) and composable Agent Skills pack that gives Cursor, Claude Code, Codex, VS Code, ChatGPT, Claude, Grok, and Lovable six scoped customer-memory tools. It remembers sourced facts (`user_stated`, `agent_inferred`, `third_party`), recalls context with hybrid BM25 + semantic search and point-in-time `as_of` filters, checks slot-scoped evidence before actions (`recall_for_action` -> `act` / `ask` / `abstain`), records user confirmation, and forgets selected memory without exposing a project-wide API key to the client.
+ContextDB is an OAuth 2.1 Streamable HTTP MCP connector (`https://api.contextdb.ai/mcp`) and composable Agent Skills pack that gives Cursor, Claude Code, Codex, VS Code, ChatGPT, Claude, Grok, and Lovable nine scoped customer-memory and continuity tools. It assembles turn-start continuity in one call (`get_context`), manages rolling session notes and named pinned working blocks with memory-pressure signals (`session_note`), remembers and evolves sourced facts (`user_stated`, `agent_inferred`, `third_party`) with hybrid BM25 + semantic search and point-in-time `as_of` filters, checks slot-scoped evidence before actions (`recall_for_action` -> `act` / `ask` / `abstain`), records user confirmation, and forgets selected memory without exposing a project-wide API key to the client.
 
 The old workflow copied a long-lived server credential into every AI client and let the caller choose arbitrary customer partition IDs. ContextDB OAuth grants instead bind one account, project, scope set, and opaque memory partition on the server. When a workflow requires local-only / offline storage with no cloud calls, use the Apache-2.0 Python engine (`pip install pycontextdb`) on SQLite instead.
 
@@ -85,11 +85,13 @@ pip install "pycontextdb[serve]"
 contextdb serve --http --host 127.0.0.1 --port 8080 --token "$CONTEXTDB_SERVE_TOKEN"
 ```
 
-## Try the six scoped tools
+## Try the nine scoped tools
 
 After OAuth authorization, verify your first result with synthetic prompts:
 
 ```text
+Load my current continuity pack using get_context for session "session-1".
+Pin a working block "active_task" via session_note: "Reviewing Q4 billing preferences."
 Remember that I prefer email updates (entity: user, attribute: contact_preference).
 How should you contact me?
 Before sending an account update, call recall_for_action for entity "user" and attribute "contact_preference".
@@ -99,7 +101,10 @@ Forget the contact_preference slot for entity "user".
 
 Exposed tools:
 
+- `get_context` — assemble pinned working blocks, rolling session notes, durable facts, 1-hop entity relations, pending confirmations, and optional past experience in one token-budgeted block with `truncated`, `omitted_counts`, `memory_pressure`, and `eviction_candidates`
+- `session_note` — push rolling session notes (`action: "push"`), update named pinned working-context blocks in place (`action: "replace"` with `block_key`, optional `old_text`, and `new_text`), or clear a session scratchpad (`action: "clear"`)
 - `remember` — store one sourced fact (`user_stated`, `agent_inferred`, `third_party`) with optional `entity`+`attribute` and `event_time`
+- `evolve` — apply an explicit `add`, `update`, `delete`, or `noop` factual-memory operation with lineage tracking
 - `recall` — hybrid BM25 + semantic grounding search with optional `as_of` and consistency floor (not action authorization)
 - `recall_for_action` — slot-scoped pre-action check returning `decision_id`, `outcome` (`act` | `ask` | `abstain`), `memories`, and `pending_confirmation_ids`
 - `pending_confirmations` — list active unconfirmed memories (optionally filtered by `entity`+`attribute`)
@@ -159,6 +164,7 @@ zip -r contextdb-openai-plugin-1.1.1.zip plugin.json mcp.json assets README.md L
 ## Links
 
 - [ContextDB MCP documentation](https://contextdb.ai/mcp)
+- [Agent Skills Discovery index](https://contextdb.ai/.well-known/agent-skills/index.json)
 - [AI coding-agent integration guide](https://contextdb.ai/for-agents) ([plain text](https://contextdb.ai/for-agents.txt))
 - [Cloud API reference & quickstart](https://contextdb.ai/docs#quickstart)
 - [Memory API OpenAPI 3.1 contract](https://contextdb.ai/openapi.yaml)
