@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "contextdb-memory",
-  "description": "Customer memory with recall, confirmation, forgetting, and pre-action evidence checks.",
-  "version": "1.1.1",
+  "description": "Persistent memory and context continuity across chats: remember preferences, assemble session context, evolve facts, and verify evidence (act, ask, abstain) before consequential actions.",
+  "version": "1.2.0",
   "author": {
     "name": "Atoms AI",
     "url": "https://contextdb.ai"
@@ -13,32 +13,38 @@
   "keywords": [
     "mcp",
     "memory",
+    "persistent-memory",
+    "context-continuity",
+    "working-memory",
+    "preferences",
     "ai-agents",
     "customer-context",
+    "action-gating",
     "oauth"
   ],
   "extensions": {
     "com.openai": {
       "interface": {
         "displayName": "ContextDB",
-        "shortDescription": "Save facts, check them first",
-        "longDescription": "ContextDB gives ChatGPT memory for one ContextDB project. Save facts you state, recall them later, and check memory before a consequential step such as a booking. Each check returns act, ask, or abstain: act when trusted memory is on file, ask when a fact still needs your confirmation, and abstain when there is no evidence. Act is advice, not permission, so check that the returned memory is about the step. You can also list facts awaiting confirmation, confirm them, and forget any saved memory. You sign in with your ContextDB account and choose one project, so ChatGPT receives a revocable OAuth token and never a project API key. ContextDB only advises: it does not book, pay, or change anything outside its own memory store. ContextDB Cloud is a hosted alpha with no uptime SLA.",
+        "shortDescription": "Persistent memory across chats, verified first",
+        "longDescription": "ContextDB gives ChatGPT persistent memory and session continuity for one ContextDB project. Load saved preferences and active session context at the start of a chat, keep pinned working blocks during long tasks, save or evolve facts you state, search saved memory with keyword and date filters, and verify memory before a consequential step such as a booking. Each pre-action check returns act, ask, or abstain: act when trusted memory is on file, ask when a fact still needs your confirmation, and abstain when there is no trusted evidence. Act is advice, not permission, so verify that the returned memory matches the step. You can also list facts awaiting confirmation, confirm them, and forget any saved memory. You sign in with your ContextDB account and choose one project, so ChatGPT receives a revocable OAuth token and never a project API key. ContextDB only advises: it does not book, pay, or change anything outside its own memory store. ContextDB Cloud is a hosted alpha with no uptime SLA.",
         "developerName": "SaaS Labs",
         "category": "Productivity",
         "capabilities": [
-          "Remember facts you state",
-          "Recall saved memory",
+          "Load persistent preferences and active session context in one call",
+          "Maintain pinned working notes during long tasks",
+          "Remember and evolve durable facts with source tracking",
+          "Search saved memory by keyword, identifier, or date",
           "Check memory before an action: act, ask, or abstain",
-          "Confirm facts that are waiting for your approval",
-          "Forget a saved memory"
+          "Confirm facts waiting for your approval or forget saved memory"
         ],
         "websiteURL": "https://contextdb.ai",
         "supportURL": "https://contextdb.ai/legal#support",
         "privacyPolicyURL": "https://contextdb.ai/legal#privacy",
         "termsOfServiceURL": "https://contextdb.ai/legal",
         "defaultPrompt": [
+          "Load my saved preferences and active session context.",
           "Remember that I prefer Thursday afternoon appointments.",
-          "What do you remember about my appointment preferences?",
           "Before you book my next visit, check which of my preferences are confirmed."
         ],
         "composerIcon": "./assets/contextdb-icon.png",
@@ -100,7 +106,7 @@
         "commerce_description": "ContextDB does not sell products or process payments."
       },
       "publication": {
-        "release_notes": "ContextDB for ChatGPT 1.1.1, in hosted alpha with no uptime SLA. Adds capability labels and review cases for access outside the connected project, acting on unconfirmed facts, and bulk deletion. The six tools are unchanged: remember, recall, recall_for_action, pending_confirmations, confirm, and forget. remember and confirm are now marked as able to replace a fact's current value, so ChatGPT asks before running them. You sign in with your ContextDB account and pick one project."
+        "release_notes": "ContextDB for ChatGPT 1.2.0, in hosted alpha with no uptime SLA. Adds three continuity tools alongside the original six: get_context (token-budgeted turn-start continuity with truncation and memory-pressure signals), session_note (rolling scratchpad notes and named pinned working blocks), and evolve (explicit ADD/UPDATE/DELETE/NOOP factual evolution with lineage). Updates listing descriptions and default prompts for clearer discovery and tool selection. You sign in with your ContextDB account and pick one project."
       }
     }
   }

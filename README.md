@@ -151,14 +151,14 @@ Copy this block into your repository's `AGENTS.md` or `CLAUDE.md` **only after**
 
 ## Current status and limitations
 
-ContextDB Cloud and the OAuth MCP connector are **Hosted Alpha** with no availability SLA, no SOC 2 / HIPAA / BAA certification, and staged/inactive billing (free tier includes 20,000 operations/month). The server is published in the official MCP Registry as `io.github.atomsai/contextdb-memory@0.1.0`, listed on [Cursor Directory](https://cursor.directory/plugins/contextdb), and approved in the OpenAI ChatGPT plugin portal (`v1.0.0`, with package `1.1.1` prepared in `plugin.json`).
+ContextDB Cloud and the OAuth MCP connector are **Hosted Alpha** with no availability SLA, no SOC 2 / HIPAA / BAA certification, and staged/inactive billing (free tier includes 20,000 operations/month). The server is published in the official MCP Registry as `io.github.atomsai/contextdb-memory@0.1.0`, listed on [Cursor Directory](https://cursor.directory/plugins/contextdb), and approved in the OpenAI ChatGPT plugin portal (`v1.0.0`, with package `1.2.0` prepared in `plugin.json`).
 
 ## OpenAI plugin package
 
 `plugin.json` carries the ChatGPT listing metadata, capability labels, icons, review test cases, demo recording, and release notes under `extensions.com.openai`. Reviewer credentials are never stored in git. Build the MCP-only archive from the repository root:
 
 ```bash
-zip -r contextdb-openai-plugin-1.1.1.zip plugin.json mcp.json assets README.md LICENSE NOTICE
+zip -r contextdb-openai-plugin-1.2.0.zip plugin.json mcp.json assets README.md LICENSE NOTICE
 ```
 
 ## Links
