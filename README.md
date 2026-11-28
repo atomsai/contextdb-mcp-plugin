@@ -47,7 +47,9 @@ url = "https://api.contextdb.ai/mcp"
 
 ### VS Code / GitHub Copilot
 
-Add to `.vscode/mcp.json` (`"type": "http"` is required so VS Code uses Streamable HTTP rather than stdio):
+[![Install ContextDB MCP in VS Code](https://img.shields.io/badge/VS_Code-Install_ContextDB_MCP-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://vscode.dev/redirect/mcp/install?name=contextdb&config=%7B%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fapi.contextdb.ai%2Fmcp%22%7D)
+
+Or add to `.vscode/mcp.json` (`"type": "http"` is required so VS Code uses Streamable HTTP rather than stdio; this repo also ships `.vscode/mcp.json`):
 
 ```json
 {
@@ -151,7 +153,7 @@ Copy this block into your repository's `AGENTS.md` or `CLAUDE.md` **only after**
 
 ## Current status and limitations
 
-ContextDB Cloud and the OAuth MCP connector are **Hosted Alpha** with no availability SLA, no SOC 2 / HIPAA / BAA certification, and staged/inactive billing (free tier includes 20,000 operations/month). The server is published in the official MCP Registry as `io.github.atomsai/contextdb-memory@0.2.0`, listed on [Cursor Directory](https://cursor.directory/plugins/contextdb), and approved in the OpenAI ChatGPT plugin portal (`v1.0.0`, with package `1.2.0` prepared in `plugin.json`).
+ContextDB Cloud and the OAuth MCP connector are **Hosted Alpha** with no availability SLA, no SOC 2 / HIPAA / BAA certification, and staged/inactive billing (free tier includes 100 active profiles and 10,000 operations/month). The server is published in the official MCP Registry under DNS-verified `ai.contextdb/memory@0.3.0` (legacy GitHub namespace alias: `io.github.atomsai/contextdb-memory@0.2.0`), listed on [Cursor Directory](https://cursor.directory/plugins/contextdb), and published live in the OpenAI ChatGPT plugin portal (`v1.2.0`).
 
 ## OpenAI plugin package
 
@@ -172,7 +174,9 @@ zip -r contextdb-openai-plugin-1.2.0.zip plugin.json mcp.json assets README.md L
 - [Privacy, terms, and support](https://contextdb.ai/legal)
 - [Security controls & boundaries](https://contextdb.ai/security)
 - [Service status](https://contextdb.ai/status)
-- [Official MCP Registry entry](https://registry.modelcontextprotocol.io/v0/servers?search=io.github.atomsai%2Fcontextdb-memory)
+- [Official MCP Registry entry (`ai.contextdb/memory`)](https://registry.modelcontextprotocol.io/v0.1/servers?search=ai.contextdb)
+- [A2A Agent Card](https://contextdb.ai/.well-known/agent-card.json)
+- [Authentication guide (`auth.md`)](https://contextdb.ai/auth.md)
 - [Open-source `pycontextdb` Python SDK (`0.4.9`)](https://pypi.org/project/pycontextdb/) ([GitHub](https://github.com/atomsai/contextdb))
 
 ## FAQ

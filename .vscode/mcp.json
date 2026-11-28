@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "contextdb": {
+      "type": "http",
+      "url": "https://api.contextdb.ai/mcp"
+    }
+  }
+}
