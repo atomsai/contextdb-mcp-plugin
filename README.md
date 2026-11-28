@@ -1,5 +1,7 @@
 # MCP Customer Memory Connector & Agent Skills for AI Agents — ContextDB
 
+[![ContextDB MCP connector on Glama](https://glama.ai/mcp/connectors/io.github.atomsai/contextdb-memory/badges/score.svg)](https://glama.ai/mcp/connectors/io.github.atomsai/contextdb-memory)
+
 ContextDB is an OAuth 2.1 Streamable HTTP MCP connector (`https://api.contextdb.ai/mcp`) and composable Agent Skills pack that gives Cursor, Claude Code, Codex, VS Code, ChatGPT, Claude, Grok, and Lovable nine scoped customer-memory and continuity tools. It assembles turn-start continuity in one call (`get_context`), manages rolling session notes and named pinned working blocks with memory-pressure signals (`session_note`), remembers and evolves sourced facts (`user_stated`, `agent_inferred`, `third_party`) with hybrid BM25 + semantic search and point-in-time `as_of` filters, checks slot-scoped evidence before actions (`recall_for_action` -> `act` / `ask` / `abstain`), records user confirmation, and forgets selected memory without exposing a project-wide API key to the client.
 
 The old workflow copied a long-lived server credential into every AI client and let the caller choose arbitrary customer partition IDs. ContextDB OAuth grants instead bind one account, project, scope set, and opaque memory partition on the server. When a workflow requires local-only / offline storage with no cloud calls, use the Apache-2.0 Python engine (`pip install pycontextdb`) on SQLite instead.
